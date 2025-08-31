@@ -1,0 +1,9 @@
+{
+  "name": "auto-social-netlify-functions",
+  "version": "1.0.0",
+  "description": "Netlify Functions for Auto Social Content Repurposer",
+  "dependencies": {
+    "formidable": "^3.5.1",
+    "uuid": "^9.0.0"
+  }
+}
