@@ -1,0 +1,48 @@
+[build]
+  base = "content_repurposer_ia/web"
+  publish = "content_repurposer_ia/web/out"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_VERSION = "9"
+  NEXT_PUBLIC_API_BASE = "/api"
+
+[[functions]]
+  name = "transcribe"
+  directory = "netlify/functions/"
+
+[[functions]]
+  name = "health"
+  directory = "netlify/functions/"
+
+[dev]
+  command = "npm run dev"
+  port = 3000
+  publish = "content_repurposer_ia/web/out"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
